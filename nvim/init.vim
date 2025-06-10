@@ -40,6 +40,10 @@ Plug 'nvim-tree/nvim-tree.lua'
 Plug 'nvim-tree/nvim-web-devicons'
 "+======================+
 
+Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
+
+Plug 'm4xshen/autoclose.nvim'
+
 call plug#end()
 
 
@@ -121,4 +125,35 @@ vim.keymap.set('i', '<F26>', ':NvimTreeFindFile<CR>')
 
 vim.keymap.set('n', '<F27>', ':NvimTreeCollapse<CR>')
 vim.keymap.set('i', '<F27>', ':NvimTreeCollapse<CR>')
+END
+
+set signcolumn=yes
+
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+inoremap <silent><expr> <c-space> coc#refresh()
+
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+lua << END
+require("autoclose").setup({
+  filetypes = {
+    ["*"] = true,
+  },
+  -- Key mappings
+  mappings = {
+    ["("] = { ")", "auto" },
+    ["["] = { "]", "auto" },
+    ["{"] = { "}", "auto" },
+    ["'"] = { "'", "auto" },
+    ['"'] = { '"', "auto" },
+    ["<"] = { ">", "auto" },
+  },
+})
 END
